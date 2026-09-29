@@ -1,0 +1,561 @@
+/* ========================================
+   maccadev — Coming Soon (Night Edition)
+   Ghibli-themed | Palette: #FFD444
+   ======================================== */
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold:        #FFD444;
+    --gold-light:  #FFE27A;
+    --gold-dark:   #D4A017;
+    --gold-glow:   rgba(255, 212, 68, 0.6);
+    --cream:       #FFF9E6;
+    --night-deep:  #0B1026;
+    --night-mid:   #162044;
+    --night-soft:  #1E2D5A;
+    --moon-glow:   rgba(200, 220, 255, 0.15);
+    --warm-brown:  #5C4A2A;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--night-deep);
+}
+
+/* --- Background --- */
+.bg-image {
+    position: fixed;
+    inset: 0;
+    background: url('bg.jpg') center center / cover no-repeat;
+    z-index: 0;
+    animation: bgZoom 35s ease-in-out infinite alternate;
+}
+
+@keyframes bgZoom {
+    0%   { transform: scale(1);    }
+    100% { transform: scale(1.06); }
+}
+
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background:
+        radial-gradient(ellipse at 70% 20%, var(--moon-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at center 80%, rgba(255, 212, 68, 0.06) 0%, transparent 50%),
+        linear-gradient(to bottom,
+            rgba(11, 16, 38, 0.25) 0%,
+            rgba(11, 16, 38, 0.35) 40%,
+            rgba(11, 16, 38, 0.65) 100%
+        );
+}
+
+/* --- Floating Clouds (Night) --- */
+.cloud {
+    position: fixed;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.cloud svg {
+    width: 100%;
+    height: 100%;
+}
+
+.cloud-1 {
+    width: 350px;
+    top: 6%;
+    left: -350px;
+    animation: cloudDrift1 55s linear infinite;
+}
+
+.cloud-2 {
+    width: 280px;
+    top: 15%;
+    left: -280px;
+    animation: cloudDrift2 70s linear infinite;
+    animation-delay: 20s;
+}
+
+@keyframes cloudDrift1 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(calc(100vw + 700px)); }
+}
+
+@keyframes cloudDrift2 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(calc(100vw + 560px)); }
+}
+
+/* --- Fireflies --- */
+.fireflies {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.firefly {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow:
+        0 0 6px 2px var(--gold-glow),
+        0 0 18px 5px rgba(255, 212, 68, 0.25);
+    animation: fireflyFloat linear infinite, fireflyGlow ease-in-out infinite alternate;
+}
+
+@keyframes fireflyFloat {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(35px, -55px) scale(0.8); }
+    50%  { transform: translate(-25px, -90px) scale(1.1); }
+    75%  { transform: translate(45px, -35px) scale(0.9); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes fireflyGlow {
+    0%   { opacity: 0.1;  }
+    50%  { opacity: 0.85; }
+    100% { opacity: 0.15; }
+}
+
+/* --- Floating Code Symbols --- */
+.code-symbols {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.code-symbol {
+    position: absolute;
+    font-family: 'Fira Code', monospace;
+    color: var(--gold);
+    opacity: 0;
+    animation: symbolFloat linear infinite, symbolGlow ease-in-out infinite alternate;
+    text-shadow: 0 0 10px var(--gold-glow);
+    filter: blur(0.3px);
+}
+
+@keyframes symbolFloat {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.35;
+    }
+    50% {
+        transform: translateY(-120px) rotate(15deg);
+        opacity: 0.2;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-250px) rotate(-10deg);
+        opacity: 0;
+    }
+}
+
+@keyframes symbolGlow {
+    0%   { text-shadow: 0 0 6px rgba(255,212,68,0.2); }
+    100% { text-shadow: 0 0 16px rgba(255,212,68,0.6); }
+}
+
+/* --- Mini Terminal --- */
+.terminal {
+    width: clamp(240px, 40vw, 380px);
+    margin: 0 auto 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(11, 16, 38, 0.75);
+    border: 1px solid rgba(255, 212, 68, 0.15);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(255, 212, 68, 0.06),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: terminalEntrance 0.8s ease-out 0.6s both;
+}
+
+@keyframes terminalEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.terminal-dot-red    { background: #FF5F56; }
+.terminal-dot-yellow { background: #FFBD2E; }
+.terminal-dot-green  { background: #27C93F; }
+
+.terminal-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.05em;
+}
+
+.terminal-body {
+    padding: 12px 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+}
+
+.terminal-prompt {
+    color: #27C93F;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(39, 201, 63, 0.4);
+}
+
+.terminal-text {
+    color: var(--gold-light);
+    white-space: nowrap;
+    text-shadow: 0 0 6px rgba(255, 226, 122, 0.3);
+}
+
+.terminal-cursor {
+    color: var(--gold);
+    animation: cursorBlink 0.8s step-end infinite;
+    font-weight: 300;
+    text-shadow: 0 0 8px var(--gold-glow);
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+}
+
+/* --- Code Brackets (Decorative) --- */
+.code-bracket {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    opacity: 0;
+    animation: bracketFadeIn 1.2s ease-out 1.8s both;
+    filter: drop-shadow(0 0 12px var(--gold-glow));
+}
+
+@keyframes bracketFadeIn {
+    from { opacity: 0; transform: translateY(-50%) translateX(0) scale(0.8); }
+    to   { opacity: 0.35; transform: translateY(-50%) translateX(0) scale(1); }
+}
+
+.code-bracket-left {
+    left: -60px;
+    animation: bracketFadeIn 1.2s ease-out 1.8s both, bracketPulseLeft 4s ease-in-out 3s infinite;
+}
+
+.code-bracket-right {
+    right: -60px;
+    animation: bracketFadeIn 1.2s ease-out 2s both, bracketPulseRight 4s ease-in-out 3.2s infinite;
+}
+
+@keyframes bracketPulseLeft {
+    0%, 100% { opacity: 0.35; transform: translateY(-50%) translateX(0); }
+    50%      { opacity: 0.55; transform: translateY(-50%) translateX(-5px); }
+}
+
+@keyframes bracketPulseRight {
+    0%, 100% { opacity: 0.35; transform: translateY(-50%) translateX(0); }
+    50%      { opacity: 0.55; transform: translateY(-50%) translateX(5px); }
+}
+
+/* --- Main Container --- */
+.container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.content {
+    text-align: center;
+    position: relative;
+    animation: contentFadeIn 1.5s ease-out both;
+}
+
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Brand Name --- */
+.brand {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.02em;
+    cursor: default;
+    background: linear-gradient(
+        180deg,
+        #FFFFFF 0%,
+        var(--gold-light) 30%,
+        var(--gold) 60%,
+        var(--gold-dark) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))
+            drop-shadow(0 0 40px rgba(255, 212, 68, 0.3))
+            drop-shadow(0 0 80px rgba(255, 212, 68, 0.1));
+}
+
+.brand-letter {
+    display: inline-block;
+    animation:
+        letterEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+        letterFloat 4s ease-in-out infinite;
+    animation-delay:
+        calc(var(--i) * 0.1s),
+        calc(var(--i) * 0.15s + 1.2s);
+}
+
+@keyframes letterEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) rotateX(90deg) scale(0.5);
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes letterFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+.brand-letter:hover {
+    animation: letterBounce 0.6s ease;
+    -webkit-text-fill-color: var(--gold-light);
+    filter: drop-shadow(0 0 20px var(--gold-glow));
+    transition: filter 0.3s ease;
+}
+
+@keyframes letterBounce {
+    0%, 100% { transform: translateY(0) scale(1);   }
+    30%      { transform: translateY(-14px) scale(1.15); }
+    50%      { transform: translateY(-4px) scale(1.05); }
+    70%      { transform: translateY(-8px) scale(1.1);  }
+}
+
+/* --- Divider --- */
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0.8rem 0 1.2rem;
+    animation: dividerFadeIn 1s ease-out 1s both;
+}
+
+@keyframes dividerFadeIn {
+    from { opacity: 0; transform: scaleX(0); }
+    to   { opacity: 1; transform: scaleX(1); }
+}
+
+.divider-line {
+    display: block;
+    width: clamp(40px, 12vw, 120px);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 2px;
+}
+
+.divider-star {
+    color: var(--gold);
+    font-size: 1.2rem;
+    animation: starSpin 6s linear infinite;
+    filter: drop-shadow(0 0 8px var(--gold-glow));
+}
+
+@keyframes starSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* --- Coming Soon --- */
+.coming-soon {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.08em;
+    text-shadow:
+        0 0 30px rgba(255, 212, 68, 0.35),
+        0 0 60px rgba(255, 212, 68, 0.15),
+        0 2px 6px rgba(0, 0, 0, 0.5);
+    animation:
+        comingSoonEntrance 1.2s ease-out 0.8s both,
+        comingSoonPulse 3s ease-in-out 2.5s infinite;
+}
+
+@keyframes comingSoonEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+        letter-spacing: 0.3em;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        letter-spacing: 0.08em;
+    }
+}
+
+@keyframes comingSoonPulse {
+    0%, 100% {
+        text-shadow:
+            0 0 30px rgba(255, 212, 68, 0.35),
+            0 0 60px rgba(255, 212, 68, 0.15),
+            0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow:
+            0 0 50px rgba(255, 212, 68, 0.6),
+            0 0 100px rgba(255, 212, 68, 0.25),
+            0 0 140px rgba(255, 212, 68, 0.1),
+            0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* --- Subtitle --- */
+.subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+    font-weight: 300;
+    color: var(--cream);
+    opacity: 0.8;
+    margin-top: 1rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+    animation: subtitleFadeIn 1.2s ease-out 1.6s both;
+}
+
+@keyframes subtitleFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 0.8; transform: translateY(0); }
+}
+
+/* --- Code Tagline --- */
+.code-tagline {
+    font-family: 'Fira Code', monospace;
+    font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+    color: rgba(255, 249, 230, 0.35);
+    margin-top: 1.8rem;
+    letter-spacing: 0.04em;
+    animation: taglineFadeIn 1s ease-out 2.2s both;
+}
+
+@keyframes taglineFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.tag {
+    color: var(--gold);
+    opacity: 0.5;
+}
+
+.tag-highlight {
+    color: var(--gold-light);
+    opacity: 0.7;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .code-bracket {
+        display: none;
+    }
+
+    .terminal {
+        width: clamp(220px, 80vw, 340px);
+    }
+}
+
+@media (max-width: 600px) {
+    .brand {
+        letter-spacing: 0.02em;
+    }
+
+    .cloud-1 { width: 220px; }
+    .cloud-2 { width: 180px; }
+}
+
+@media (max-width: 400px) {
+    .content {
+        padding: 0 0.5rem;
+    }
+
+    .terminal {
+        width: 90vw;
+    }
+}

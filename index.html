@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="maccadev — Coming Soon. ">
+    <title>maccadev — Coming Soon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Caveat:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background image -->
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Floating fireflies -->
+    <div class="fireflies" id="fireflies"></div>
+
+    <!-- Floating code symbols -->
+    <div class="code-symbols" id="code-symbols"></div>
+
+    <!-- Floating clouds (night) -->
+    <div class="cloud cloud-1">
+        <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="70" cy="50" rx="60" ry="28" fill="rgba(180,200,230,0.1)" />
+            <ellipse cx="110" cy="40" rx="50" ry="32" fill="rgba(180,200,230,0.08)" />
+            <ellipse cx="150" cy="50" rx="40" ry="22" fill="rgba(180,200,230,0.06)" />
+        </svg>
+    </div>
+    <div class="cloud cloud-2">
+        <svg viewBox="0 0 180 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="60" cy="45" rx="50" ry="24" fill="rgba(180,200,230,0.08)" />
+            <ellipse cx="100" cy="35" rx="45" ry="28" fill="rgba(180,200,230,0.06)" />
+            <ellipse cx="135" cy="45" rx="35" ry="20" fill="rgba(180,200,230,0.05)" />
+        </svg>
+    </div>
+
+    <!-- Main content -->
+    <main class="container" id="main-content">
+        <div class="content">
+
+            <!-- Code bracket decoration (left) -->
+            <div class="code-bracket code-bracket-left" aria-hidden="true">
+                <svg width="40" height="120" viewBox="0 0 40 120" fill="none">
+                    <path d="M35 5 L10 60 L35 115" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
+                </svg>
+            </div>
+
+            <!-- Code bracket decoration (right) -->
+            <div class="code-bracket code-bracket-right" aria-hidden="true">
+                <svg width="40" height="120" viewBox="0 0 40 120" fill="none">
+                    <path d="M5 5 L30 60 L5 115" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
+                </svg>
+            </div>
+
+            <!-- Mini terminal window -->
+            <div class="terminal" aria-hidden="true">
+                <div class="terminal-bar">
+                    <span class="terminal-dot terminal-dot-red"></span>
+                    <span class="terminal-dot terminal-dot-yellow"></span>
+                    <span class="terminal-dot terminal-dot-green"></span>
+                    <span class="terminal-title">terminal</span>
+                </div>
+                <div class="terminal-body">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text" id="terminal-text"></span>
+                    <span class="terminal-cursor">|</span>
+                </div>
+            </div>
+
+            <!-- Brand name -->
+            <h1 class="brand" id="brand">
+                <span class="brand-letter" style="--i:0">m</span>
+                <span class="brand-letter" style="--i:1">a</span>
+                <span class="brand-letter" style="--i:2">c</span>
+                <span class="brand-letter" style="--i:3">c</span>
+                <span class="brand-letter" style="--i:4">a</span>
+                <span class="brand-letter" style="--i:5">d</span>
+                <span class="brand-letter" style="--i:6">e</span>
+                <span class="brand-letter" style="--i:7">v</span>
+            </h1>
+
+            <!-- Decorative sparkle divider -->
+            <div class="divider">
+                <span class="divider-line"></span>
+                <span class="divider-star">&#10022;</span>
+                <span class="divider-line"></span>
+            </div>
+
+            <!-- Coming Soon -->
+            <h2 class="coming-soon" id="coming-soon">Coming Soon</h2>
+
+            <!-- Subtitle -->
+
+            <!-- Code tag line -->
+            <div class="code-tagline" aria-hidden="true">
+                <span class="tag">&lt;</span>crafted with <span class="tag-highlight">passion</span> &amp; <span
+                    class="tag-highlight">code</span><span class="tag"> /&gt;</span>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Generate fireflies
+        const firefliesContainer = document.getElementById('fireflies');
+        const fireflyCount = 45;
+
+        for (let i = 0; i < fireflyCount; i++) {
+            const firefly = document.createElement('div');
+            firefly.classList.add('firefly');
+            firefly.style.left = Math.random() * 100 + '%';
+            firefly.style.top = Math.random() * 100 + '%';
+
+            const size = Math.random() * 5 + 2;
+            firefly.style.width = size + 'px';
+            firefly.style.height = size + 'px';
+            firefly.style.animationDelay = (Math.random() * 8) + 's';
+            firefly.style.animationDuration = (Math.random() * 5 + 5) + 's';
+
+            firefliesContainer.appendChild(firefly);
+        }
+
+        // Generate floating code symbols
+        const symbolsContainer = document.getElementById('code-symbols');
+        const codeChars = ['</', '{}', '/>', '()', '=>', '[]', '&&', '||', '/*', '*/', '#', '$_', '01', ';;', '::'];
+        const symbolCount = 18;
+
+        for (let i = 0; i < symbolCount; i++) {
+            const symbol = document.createElement('div');
+            symbol.classList.add('code-symbol');
+            symbol.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
+            symbol.style.left = Math.random() * 100 + '%';
+            symbol.style.top = Math.random() * 100 + '%';
+            symbol.style.fontSize = (Math.random() * 14 + 10) + 'px';
+            symbol.style.animationDelay = (Math.random() * 10) + 's';
+            symbol.style.animationDuration = (Math.random() * 8 + 10) + 's';
+            symbol.style.opacity = 0;
+
+            symbolsContainer.appendChild(symbol);
+        }
+
+        // Terminal typing animation
+        const terminalText = document.getElementById('terminal-text');
+        const commands = [
+            'npm run build:magic ✨',
+            'compiling dreams...',
+            'deploying maccadev...',
+            'initializing awesomeness',
+            'git commit -m "coming soon"',
+            'loading creativity...',
+        ];
+        let cmdIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 80;
+
+        function typeCommand() {
+            const currentCmd = commands[cmdIndex];
+
+            if (!isDeleting) {
+                terminalText.textContent = currentCmd.substring(0, charIndex + 1);
+                charIndex++;
+
+                if (charIndex === currentCmd.length) {
+                    isDeleting = true;
+                    typeSpeed = 2000; // pause before deleting
+                } else {
+                    typeSpeed = 60 + Math.random() * 60;
+                }
+            } else {
+                terminalText.textContent = currentCmd.substring(0, charIndex - 1);
+                charIndex--;
+
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    cmdIndex = (cmdIndex + 1) % commands.length;
+                    typeSpeed = 400;
+                } else {
+                    typeSpeed = 30;
+                }
+            }
+
+            setTimeout(typeCommand, typeSpeed);
+        }
+
+        // Start typing after page loads
+        setTimeout(typeCommand, 2500);
+    </script>
+</body>
+
+</html>
